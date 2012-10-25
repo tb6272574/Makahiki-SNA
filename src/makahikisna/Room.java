@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import processing.core.PConstants;
+
+import static makahikisna.MakahikiSNA.*;
 
 public class Room implements Comparable<Room> {
   
@@ -65,34 +66,30 @@ public class Room implements Comparable<Room> {
     if (players.isEmpty()) {
       throw new RuntimeException("Attempt to draw an empty room: " + getRoomID());
     }
-    
-    MakahikiSNA.processing.ellipseMode(PConstants.CENTER);
-    MakahikiSNA.processing.stroke(MakahikiSNA.color.black);
-    MakahikiSNA.processing.noFill();
+
     // Currently all rooms must have exactly 1 or 2 players.
     Player leftPlayer = players.get(0);
     Player rightPlayer = (players.size() == 1) ? players.get(0) : players.get(1);
     drawLeftSide(leftPlayer);
     drawRightSide(rightPlayer);
+    // draw center vertical line only if room has two people.
+    if (players.size() == 2) {
+      processing.stroke(color.white);
+      processing.line(center_x, (center_y + roomRadius), center_x, (center_y - roomRadius));
+    }
   }
   
   public void drawLeftSide(Player player) {
-    int timestep = MakahikiSNA.timeStep;
-    State state = State.getState(timestep % 4);
-    MakahikiSNA.processing.fill(state.getColor());
-    MakahikiSNA.processing.arc(center_x, center_y, roomDiameter, roomDiameter, (float) Math.toRadians(90),
+    player.updateState(timeStep);
+    processing.arc(center_x, center_y, roomDiameter, roomDiameter, (float) Math.toRadians(90),
         (float) Math.toRadians(270));
-    // center vertical line
-    MakahikiSNA.processing.line(center_x, (center_y + roomRadius), center_x, (center_y - roomRadius));
   }
   
   public void drawRightSide(Player player) {
-    int timestep = MakahikiSNA.timeStep;
-    State state = State.getState(timestep % 3);
-    MakahikiSNA.processing.fill(state.getColor());
-    MakahikiSNA.processing.arc(center_x, center_y, roomDiameter, roomDiameter, (float) Math.toRadians(0),
+    player.updateState(timeStep);
+    processing.arc(center_x, center_y, roomDiameter, roomDiameter, (float) Math.toRadians(0),
         (float) Math.toRadians(90));
-    MakahikiSNA.processing.arc(center_x,  center_y, roomDiameter, roomDiameter, (float) Math.toRadians(270),
+    processing.arc(center_x,  center_y, roomDiameter, roomDiameter, (float) Math.toRadians(270),
         (float) Math.toRadians(360));
   }
   

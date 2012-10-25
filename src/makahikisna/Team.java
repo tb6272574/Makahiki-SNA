@@ -8,7 +8,10 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import processing.core.PConstants;
 import au.com.bytecode.opencsv.CSVReader;
+
+import static makahikisna.MakahikiSNA.*;
 
 /**
  * Represents a Team, which is a set of Rooms. 
@@ -75,10 +78,18 @@ public class Team implements Comparable<Team> {
     if ((center_x == 0) && (center_y == 0)) {
       throw new RuntimeException("Attempt to draw team without prior layout(): " + teamID);
     }
-    //this.processing.translate(center_x, center_y);
+    // Label the team
+    drawTeamLabel();
+   
     for (Room room : this.rooms) {
       room.draw();
     }
+  }
+  
+  private void drawTeamLabel() {
+    processing.textAlign(PConstants.CENTER, PConstants.CENTER);
+    processing.fill(MakahikiSNA.color.black);
+    processing.text(teamID, center_x, center_y);
   }
 
 

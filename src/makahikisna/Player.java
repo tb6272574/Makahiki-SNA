@@ -2,6 +2,12 @@ package makahikisna;
 
 import java.util.HashMap;
 import java.util.Map;
+import makahikisna.state.ActiveInGameFillState;
+import makahikisna.state.BonusSocialState;
+import makahikisna.state.FillState;
+import makahikisna.state.RegistrationStrokeState;
+import makahikisna.state.SocialState;
+import makahikisna.state.StrokeState;
 
 public class Player {
   
@@ -16,6 +22,11 @@ public class Player {
   private Team team;
   @SuppressWarnings("unused")
   private Room room;
+  
+  private FillState fillState = new ActiveInGameFillState();
+  private StrokeState strokeState = new RegistrationStrokeState();
+  private SocialState socialState = new BonusSocialState();
+  
 
   public Player(String lastName, String firstName, String email, Team team, Room room) {
     this.lastName = lastName;
@@ -41,5 +52,13 @@ public class Player {
   public String toString() {
     return this.email;
   }
-
+  
+  public void updateState(int data) {
+    fillState.processTimestampData(data);
+    fillState.setFillColor();
+    socialState.processTimestampData(data);
+    socialState.drawLines();
+    strokeState.processTimestampData(data);
+    strokeState.setStrokeColor();
+  }
 }
