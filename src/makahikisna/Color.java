@@ -33,7 +33,7 @@ public class Color {
     return processing.color(hue, saturation, brightness);
   }
   
-  public static int lighten(int color, int level) {
+  public static int darken(int color, int level) {
     float hue = processing.hue(color);
     float saturation = processing.saturation(color);
     float brightness = processing.brightness(color);

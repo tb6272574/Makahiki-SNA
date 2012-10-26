@@ -89,4 +89,13 @@ public class Player {
     strokeState.processTimestampData(events);
     strokeState.setStrokeColor();
   }
+  
+  public static void printPlayerEventSummary() {
+    for (Player player : players.values()) {
+      for (int timestep : player.events.keySet()) {
+        System.out.format("%s Timestep: %d Num Events: %d%n", player.getPlayerID(), timestep,
+            player.events.get(timestep).size());
+      }
+    }
+  }
 }

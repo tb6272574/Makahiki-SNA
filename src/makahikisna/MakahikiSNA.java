@@ -47,6 +47,9 @@ public class MakahikiSNA extends PApplet {
     
     // Load event data.
     EventData.loadEventData(this);
+    
+    // Print out summary of events.
+    Player.printPlayerEventSummary();
 
     // Layout only Lehua Floor 9
     Team lehua_09 = Team.getTeam("LE-09");

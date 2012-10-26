@@ -8,7 +8,7 @@ import makahikisna.Event;
 
 public class ActiveInGameFillState extends FillState {
   private boolean isActive = false;
-  private int activeColor = Color.lighten(color.green, 75);
+  private int activeColor = Color.darken(color.green, 25);
   private int nonActiveColor = color.white;
 
   @Override
@@ -18,10 +18,12 @@ public class ActiveInGameFillState extends FillState {
 
   @Override
   public void processTimestampData(List<Event> events) {
-    if (!events.isEmpty()){
-      activeColor = Color.brighten(activeColor, 2);
+    if (!events.isEmpty()) {
+      isActive = true;
+      activeColor = Color.brighten(activeColor, 5);
+    } else {
+      activeColor = Color.darken(activeColor, 1);
     }
-   
   }
 
 }

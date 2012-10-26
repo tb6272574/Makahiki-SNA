@@ -2,10 +2,12 @@ package makahikisna.state;
 
 import static makahikisna.MakahikiSNA.*;
 import java.util.List;
+import makahikisna.Color;
 import makahikisna.Event;
 
 public class RegistrationStrokeState extends StrokeState {
   private boolean isStarted = false;
+  private int activeColor = Color.darken(color.green, 50);
 
   @Override
   public void setStrokeColor() {
@@ -17,7 +19,8 @@ public class RegistrationStrokeState extends StrokeState {
   public void processTimestampData(List<Event> events) {
     if (!events.isEmpty()) {
       isStarted = true;
-    }
+      activeColor = Color.brighten(activeColor, 5);
+    } 
   }
 
 }
