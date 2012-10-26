@@ -8,13 +8,17 @@ import java.util.TreeMap;
 import makahikisna.state.ActiveInGameFillState;
 import makahikisna.state.BonusSocialState;
 import makahikisna.state.FillState;
-import makahikisna.state.RegistrationStrokeState;
+import makahikisna.state.CumulativeEventsStrokeState;
 import makahikisna.state.SocialState;
 import makahikisna.state.StrokeState;
 
 public class Player {
   
   public static Map<String, Player> players = new HashMap<String, Player>();
+  
+  public static int maxPlayerTotalEvents = 0;
+  
+  public static int maxPlayerTimeStepEvents = 0;
   
   @SuppressWarnings("unused")
   private String lastName;
@@ -26,12 +30,15 @@ public class Player {
   @SuppressWarnings("unused")
   private Room room;
   
+  private int numEvents = 0;
+  private int numTimeSteps = 0;
+  
   /** Maps a timestep to a list of events. */
   private Map<Integer, List<Event>> events = new TreeMap<Integer, List<Event>>();
   
-  private FillState fillState = new ActiveInGameFillState();
-  private StrokeState strokeState = new RegistrationStrokeState();
-  private SocialState socialState = new BonusSocialState();
+  private FillState fillState = new ActiveInGameFillState(this);
+  private StrokeState strokeState = new CumulativeEventsStrokeState(this);
+  private SocialState socialState = new BonusSocialState(this);
   
 
   public Player(String lastName, String firstName, String email, Team team, Room room) {
@@ -63,11 +70,29 @@ public class Player {
   
   public void addEvent(TimeStepDefinition timestepdef, Event event) {
     int timestep = timestepdef.timeStamp2TimeStep(event.getTimestamp());
+    // If this data is associated with a new timestep, set it up.
     if (!events.containsKey(timestep)) {
       events.put(timestep, new ArrayList<Event>());
+      this.numTimeSteps++;
     }
+    
+    // Add this event to this timestep's list. 
     List<Event> eventList = events.get(timestep);
     eventList.add(event);
+    
+    // If this player's timestep total is the most seen so far, record that.
+    if (eventList.size() > Player.maxPlayerTimeStepEvents) {
+      Player.maxPlayerTimeStepEvents = eventList.size();
+    }
+
+    //Update the total number of events associated with this Player.
+    this.numEvents++;
+    
+    // If this player's total events is the max seen so far, record that.
+    if (this.numEvents > Player.maxPlayerTotalEvents) {
+      Player.maxPlayerTotalEvents = this.numEvents;
+    }
+
   }
   
   public List<Event> getEvents(int timestep) {
@@ -90,11 +115,21 @@ public class Player {
     strokeState.setStrokeColor();
   }
   
+  public int getNumEvents() {
+    return this.numEvents;
+  }
+  
+  public int getNumTimeSteps() {
+    return this.numTimeSteps;
+  }
+  
   public static void printPlayerEventSummary() {
     for (Player player : players.values()) {
-      for (int timestep : player.events.keySet()) {
-        System.out.format("%s Timestep: %d Num Events: %d%n", player.getPlayerID(), timestep,
-            player.events.get(timestep).size());
+      int timesteps = player.getNumTimeSteps();
+      int events = player.getNumEvents();
+      if (timesteps > 0) {
+        System.out.format("%-20s Timesteps: %-3d Events: %-5d%n", 
+            player.getPlayerID(), timesteps, events);
       }
     }
   }

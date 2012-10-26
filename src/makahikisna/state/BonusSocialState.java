@@ -2,8 +2,13 @@ package makahikisna.state;
 
 import java.util.List;
 import makahikisna.Event;
+import makahikisna.Player;
 
 public class BonusSocialState extends SocialState {
+  
+  public BonusSocialState(Player player) {
+    super(player);
+  }
 
   @Override
   public void drawLines() {

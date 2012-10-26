@@ -4,10 +4,10 @@ import static makahikisna.MakahikiSNA.*;
 
 public class Color {
   
-  private int redHue = 350;
-  private int blueHue = 230;
+  private int redHue = 0;
   private int greenHue = 125;
-  
+  private int blueHue = 250;
+    
   // Basic colors
   public int blue;
   public int white;
@@ -40,5 +40,19 @@ public class Color {
     saturation = ((saturation + level) < 0) ? saturation : (saturation - level);
     brightness = ((brightness + level) < 0) ? brightness : (brightness - level);
     return processing.color(hue, saturation, brightness);
+  }
+  
+  public static int incrementHue(int color, int increment) {
+    float hue = processing.hue(color);
+    float saturation = processing.saturation(color);
+    float brightness = processing.brightness(color);
+    hue += increment;
+    return processing.color(hue, saturation, brightness);
+  }
+  
+  public static int setHue(int color, int newHue) {
+    float saturation = processing.saturation(color);
+    float brightness = processing.brightness(color);
+    return processing.color(newHue, saturation, brightness);
   }
 }

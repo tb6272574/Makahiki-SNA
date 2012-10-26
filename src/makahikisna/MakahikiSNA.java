@@ -35,7 +35,7 @@ public class MakahikiSNA extends PApplet {
     // Define the size of the canvas and the background color. 
     size(canvasWidth, canvasHeight);
     background(color.white);
-    frameRate(4);
+    frameRate(2);
     
      // Create the font
     textFont(createFont("Arial", 12));
