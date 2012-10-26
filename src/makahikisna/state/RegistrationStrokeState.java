@@ -1,10 +1,10 @@
 package makahikisna.state;
 
-import java.util.Random;
 import static makahikisna.MakahikiSNA.*;
+import java.util.List;
+import makahikisna.Event;
 
 public class RegistrationStrokeState extends StrokeState {
-  private int startTimeStep = new Random().nextInt(10);
   private boolean isStarted = false;
 
   @Override
@@ -14,8 +14,10 @@ public class RegistrationStrokeState extends StrokeState {
   }
 
   @Override
-  public void processTimestampData(int data) {
-    this.isStarted = (data > startTimeStep);
+  public void processTimestampData(List<Event> events) {
+    if (!events.isEmpty()) {
+      isStarted = true;
+    }
   }
 
 }

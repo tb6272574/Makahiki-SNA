@@ -1,24 +1,27 @@
 package makahikisna.state;
 
-import java.util.Random;
+import makahikisna.Color;
 import static makahikisna.MakahikiSNA.*;
 
+import java.util.List;
+import makahikisna.Event;
+
 public class ActiveInGameFillState extends FillState {
-  private int startTimeStep = 10 + new Random().nextInt(10);
-  private int transparency = 10;
   private boolean isActive = false;
+  private int activeColor = Color.lighten(color.green, 75);
+  private int nonActiveColor = color.white;
 
   @Override
   public void setFillColor() {
-    processing.fill(isActive ? color.green(transparency) : color.white);
+    processing.fill(isActive ? activeColor : nonActiveColor);
   }
 
   @Override
-  public void processTimestampData(int data) {
-    this.isActive = (data > startTimeStep);
-    if (data > startTimeStep) {
-      transparency += 5;
+  public void processTimestampData(List<Event> events) {
+    if (!events.isEmpty()){
+      activeColor = Color.brighten(activeColor, 2);
     }
+   
   }
 
 }

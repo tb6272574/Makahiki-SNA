@@ -189,7 +189,7 @@ public class Team implements Comparable<Team> {
   
   @Override
   public boolean equals(Object obj) {
-    return this.teamID.equals(obj);
+    return (obj instanceof Team) && this.teamID.equals(((Team)obj).teamID);
   }
   
   @Override

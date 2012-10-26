@@ -68,15 +68,43 @@ public class Room implements Comparable<Room> {
     }
 
     // Currently all rooms must have exactly 1 or 2 players.
-    Player leftPlayer = players.get(0);
-    Player rightPlayer = (players.size() == 1) ? players.get(0) : players.get(1);
-    drawLeftSide(leftPlayer);
-    drawRightSide(rightPlayer);
-    // draw center vertical line only if room has two people.
-    if (players.size() == 2) {
-      processing.stroke(color.white);
-      processing.line(center_x, (center_y + roomRadius), center_x, (center_y - roomRadius));
+    if (players.size() == 1) {
+      drawOnePlayerRoom(players.get(0));
     }
+    else if (players.size() == 2) {
+      drawTwoPlayerRoom(players.get(0), players.get(1)); 
+    }
+    else {
+      throw new RuntimeException("Room with more than 2 players: " + this.getRoomID());
+    }
+  }
+  
+  public void drawTwoPlayerRoom(Player player1, Player player2) {
+    // Left side.
+    player1.updateState(timeStep);
+    processing.arc(center_x, center_y, roomDiameter, roomDiameter, (float) Math.toRadians(90),
+        (float) Math.toRadians(270));
+    // Right side.
+    player2.updateState(timeStep);
+    processing.arc(center_x, center_y, roomDiameter, roomDiameter, (float) Math.toRadians(0),
+        (float) Math.toRadians(90));
+    processing.arc(center_x,  center_y, roomDiameter, roomDiameter, (float) Math.toRadians(270),
+        (float) Math.toRadians(360));
+    // draw the middle bar.
+    processing.stroke(color.white);
+    processing.line(center_x, (center_y + roomRadius), center_x, (center_y - roomRadius));
+  }
+  
+  public void drawOnePlayerRoom(Player player) {
+    // Left side.
+    player.updateState(timeStep);
+    processing.arc(center_x, center_y, roomDiameter, roomDiameter, (float) Math.toRadians(90),
+        (float) Math.toRadians(270));
+    // Right side.
+    processing.arc(center_x, center_y, roomDiameter, roomDiameter, (float) Math.toRadians(0),
+        (float) Math.toRadians(90));
+    processing.arc(center_x,  center_y, roomDiameter, roomDiameter, (float) Math.toRadians(270),
+        (float) Math.toRadians(360));
   }
   
   public void drawLeftSide(Player player) {
@@ -104,7 +132,7 @@ public class Room implements Comparable<Room> {
   
   @Override
   public boolean equals(Object obj) {
-    return this.getRoomID().equals(obj);
+    return (obj instanceof Room) && this.getRoomID().equals(((Room)obj).getRoomID());
   }
   
   @Override
