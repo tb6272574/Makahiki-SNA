@@ -1,6 +1,7 @@
 package makahikisna;
 
 import java.text.DateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import processing.core.PApplet;
 import processing.core.PConstants;
@@ -19,8 +20,16 @@ public class MakahikiSNA extends PApplet {
   public static int timeStepIntervalMinutes = 30;
   public static TimeStepDefinition timeStepDefinition;
   
-  public static final int canvasWidth = 400;
+  public static final int canvasWidth = 600;
   public static final int canvasHeight = 600;
+  
+  public static final String[] lehuaTeams = {
+    "LE-12", "LE-11", 
+    "LE-10", "LE-09", 
+    "LE-08", "LE-07", 
+    "LE-06", "LE-05", 
+    "LE-04", "LE-03"  
+    };
   
   public static DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
 
@@ -33,7 +42,7 @@ public class MakahikiSNA extends PApplet {
     processing.ellipseMode(PConstants.CENTER);
     
     // Define the size of the canvas and the background color. 
-    size(canvasWidth, canvasHeight);
+    
     background(color.white);
     frameRate(2);
     
@@ -49,12 +58,37 @@ public class MakahikiSNA extends PApplet {
     EventData.loadEventData(this);
     
     // Print out summary of events.
-    Player.printPlayerEventSummary();
+    //Player.printPlayerEventSummary();
 
-    // Layout only Lehua Floor 9
-    Team lehua_09 = Team.getTeam("LE-09");
-    Team.layoutTeamData(lehua_09, lehua_09.getTeamRadius() + Room.roomDiameter, 
-        lehua_09.getTeamRadius() + Room.roomDiameter);
+    // Layout Lehua.
+    int max_x = 0;
+    int max_y = 0;
+    int floorDiameter = Team.getTeam("LE-09").getTeamRadius() + Room.roomDiameter;
+    int padding = 10;
+    for (int lounge = 0; lounge < 10; lounge = lounge + 2) {
+      String teamName1 = MakahikiSNA.lehuaTeams[lounge];
+      String teamName2 = MakahikiSNA.lehuaTeams[lounge + 1];
+      int team1_center_x_offset = 0;
+      int team1_center_y_offset = (lounge * floorDiameter) + padding;
+      int team2_center_x_offset = (2 * floorDiameter) + padding;
+      int team2_center_y_offset = (lounge * floorDiameter) + padding;
+      
+      // (x, y) positions, and figure out dimensions for page.
+      int team1_center_x = floorDiameter + team1_center_x_offset;
+      max_x = Math.max(max_x, team1_center_x);
+      int team1_center_y = floorDiameter + team1_center_y_offset;
+      max_y = Math.max(max_y, team1_center_y);
+      int team2_center_x = floorDiameter + team2_center_x_offset;
+      max_x = Math.max(max_x, team2_center_x);
+      int team2_center_y = floorDiameter + team2_center_y_offset;
+      max_y = Math.max(max_y, team2_center_y);
+      
+      
+      Team.layoutTeamData(Team.getTeam(teamName1), team1_center_x, team1_center_y);
+      Team.layoutTeamData(Team.getTeam(teamName2), team2_center_x, team2_center_y);
+    }
+    
+    size(max_x + 100, max_y + 100);
     //Team.printTeamData();
   }
   
@@ -68,8 +102,9 @@ public class MakahikiSNA extends PApplet {
     // Each timestep lasts one second. Update the global timeStep variable.
     timeStep = (int)(millis() / 1000);
     // Draw the teams and rooms.
-    Team lehua_09 = Team.getTeam("LE-09");
-    lehua_09.draw();
+    for (String teamName : Arrays.asList(MakahikiSNA.lehuaTeams)) {
+      Team.getTeam(teamName).draw();
+    }
     drawTimestampLabel();
   }
 

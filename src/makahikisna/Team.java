@@ -158,6 +158,7 @@ public class Team implements Comparable<Team> {
       // tell the room what its center point is.
       Room room = (Room)team.rooms.toArray()[i];
       room.setCoordinates(x, y);
+      //System.out.format("Room: %s (%d, %d)%n", room.getRoomID(), x, y);
     }
   }
   
