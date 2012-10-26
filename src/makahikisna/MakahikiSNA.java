@@ -20,8 +20,8 @@ public class MakahikiSNA extends PApplet {
   public static int timeStepIntervalMinutes = 30;
   public static TimeStepDefinition timeStepDefinition;
   
-  public static final int canvasWidth = 600;
-  public static final int canvasHeight = 600;
+  public static int canvasWidth;
+  public static int canvasHeight;
   
   public static final String[] lehuaTeams = {
     "LE-12", "LE-11", 
@@ -88,7 +88,9 @@ public class MakahikiSNA extends PApplet {
       Team.layoutTeamData(Team.getTeam(teamName2), team2_center_x, team2_center_y);
     }
     
-    size(max_x + 100, max_y + 100);
+    MakahikiSNA.canvasHeight = max_y + 100;
+    MakahikiSNA.canvasWidth = max_x + 100;
+    size(canvasWidth, canvasHeight);
     //Team.printTeamData();
   }
   
