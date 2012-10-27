@@ -137,7 +137,7 @@ public class MakahikiSNA extends PApplet {
     }
     drawTimestampLabel();
     
-    if (timeStep > timeStepDefinition.getLastTimeStep()) {
+    if (timeStep == timeStepDefinition.getLastTimeStep()) {
       processing.stop();
     }
   }

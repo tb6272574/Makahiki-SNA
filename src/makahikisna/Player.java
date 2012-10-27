@@ -12,7 +12,7 @@ import makahikisna.state.CumulativeEventsStrokeState;
 import makahikisna.state.SocialState;
 import makahikisna.state.StrokeState;
 
-public class Player {
+public class Player implements Comparable<Player>{
   
   public static Map<String, Player> players = new HashMap<String, Player>();
   
@@ -150,5 +150,20 @@ public class Player {
   
   public Team getTeam() {
     return this.team;
+  }
+  
+  @Override
+  public int hashCode() {
+    return this.email.hashCode();
+  }
+  
+  @Override
+  public boolean equals(Object obj) {
+    return (obj instanceof Player) && this.email.equals(((Player)obj).email);
+  }
+  
+  @Override
+  public int compareTo(Player otherPlayer) {
+    return this.email.compareTo(otherPlayer.email);
   }
 }

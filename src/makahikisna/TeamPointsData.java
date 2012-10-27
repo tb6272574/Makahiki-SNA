@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.TreeMap;
 import au.com.bytecode.opencsv.CSVReader;
 
 public class TeamPointsData {
@@ -30,7 +31,7 @@ public class TeamPointsData {
     } 
     
     // [2] Process each message and build the player2timestep2points data structure.
-    Map<Player, Map<Integer,Integer>> player2timestep2points = new HashMap<Player, Map<Integer, Integer>>();
+    Map<Player, Map<Integer,Integer>> player2timestep2points = new TreeMap<Player, Map<Integer, Integer>>();
     // Format:  timestamp,user,points
     for (String[] eventLine : playerPointLines) {
       String timestamp = eventLine[0];
@@ -61,12 +62,22 @@ public class TeamPointsData {
         int timestep = timeStepDefinition.timeStamp2TimeStep(date.getTime());
         // Make sure the data structure is initialized.
         if (!player2timestep2points.containsKey(player)) {
-          player2timestep2points.put(player, new HashMap<Integer, Integer>());
+          player2timestep2points.put(player, new TreeMap<Integer, Integer>());
         }
         // record the latest value for this timestep.
         player2timestep2points.get(player).put(timestep, points);
       }
     }
+//    // Print out our data structure.
+//    for (Player player : player2timestep2points.keySet()) {
+//      String outputline = "";
+//      for (int timestep : player2timestep2points.get(player).keySet()) {
+//        int points = player2timestep2points.get(player).get(timestep);
+//        //outputline += " " + timestep + "(" + points + ")";
+//        outputline += " " + points;
+//      }
+//      System.out.format("%20s %s%n", player.getPlayerID(), outputline);
+//    }
     // Now loop through all the players we just found, and update their team for each timestep.
     for (Player player : player2timestep2points.keySet()) {
       Team team = player.getTeam();
@@ -76,6 +87,15 @@ public class TeamPointsData {
         team.addPoints2Timestep(timestep, points);
       }
     }
+    
+//    // Print out the team data structure.
+//    for (Team team : Team.teams.values()) {
+//      String outputline = "";
+//      for (int timestep = 0; timestep < 80; timestep++) {
+//        outputline += " " + team.getPoints(timestep);
+//      }
+//      System.out.format("%s %s%n", team.getTeamID(), outputline);
+//    }
   }
 
 }
