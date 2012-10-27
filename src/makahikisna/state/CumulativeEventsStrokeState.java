@@ -32,7 +32,7 @@ public class CumulativeEventsStrokeState extends StrokeState {
     }
 
     int maxEvents = Player.maxPlayerTotalEvents;
-    int newHue = (int) (((double)totalEvents/(double)maxEvents) * 100);
+    int newHue = (int) (((double)totalEvents/(double)maxEvents) * 250); // from red to blue.
     activeColor = Color.setHue(activeColor, newHue);
     cumulativeEvents = totalEvents;
   }

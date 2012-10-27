@@ -2,6 +2,7 @@ package makahikisna;
 
 import java.io.File;
 import java.io.FileReader;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -21,6 +22,8 @@ public class Team implements Comparable<Team> {
 
   /** Maintain a data structure containing all of the defined Teams. */
   public static Map<String, Team> teams = new TreeMap<String, Team>();
+  
+  private Map<Integer, Integer> timestep2points = new HashMap<Integer, Integer>();
 
   // Instance variables.
   int center_x = 0;
@@ -81,8 +84,13 @@ public class Team implements Comparable<Team> {
     // Label the team
     drawTeamLabel();
    
+    // Draw basic room layout.
     for (Room room : this.rooms) {
       room.draw();
+    }
+    // Draw the social relationships between rooms
+    for (Room room : this.rooms){
+      room.drawSocialLines();
     }
   }
   
@@ -90,6 +98,7 @@ public class Team implements Comparable<Team> {
     processing.textAlign(PConstants.CENTER, PConstants.CENTER);
     processing.fill(MakahikiSNA.color.black);
     processing.text(teamID, center_x, center_y);
+    processing.text(this.getPoints(timeStep), center_x, center_y + 10);
   }
 
 
@@ -181,6 +190,19 @@ public class Team implements Comparable<Team> {
     for (Room room : Room.rooms.values()){
       System.out.format("%s: %s%n", room.getRoomID(), room.getPlayers()); 
     }
+  }
+  
+  public void addPoints2Timestep(int timestep, int points) {
+    if (!this.timestep2points.containsKey(timestep)) {
+      this.timestep2points.put(timestep, 0);
+    }
+    int currPoints = this.timestep2points.get(timestep);
+    this.timestep2points.put(timestep, currPoints + points);
+  }
+  
+  public int getPoints(int timestep) {
+    return (this.timestep2points.containsKey(timestep)) ? 
+        this.timestep2points.get(timestep) : 0;
   }
   
   @Override

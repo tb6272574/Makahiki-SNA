@@ -8,9 +8,12 @@ public class Event implements Comparable<Event> {
   Date date;
   Player player;
   String action;
-  String partner;
+  Player partner;
   
   public Event(String timestamp, String user, String action, String partner) throws Exception {
+    // Make sure partner is a string. 
+    partner = (partner == null) ? "" : partner;
+
     // Date example: 2012-09-04 13:57:18.067132
     SimpleDateFormat formatter = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss.SSSSSS");
     try {
@@ -24,7 +27,24 @@ public class Event implements Comparable<Event> {
     }
     this.player = Player.getPlayer(user);
     this.action= action;
-    this.partner = partner;
+    // if partner is supplied.
+    if (!partner.isEmpty()) {
+      if (!Player.isPlayer(partner)) {
+        throw new Exception("Error: unknown partner for player: " + user + " " + partner);
+      }
+      this.partner = Player.getPlayer(partner);
+    }
+  }
+  
+  public Player getPartner() {
+    if (this.partner == null) {
+      throw new RuntimeException("Attempt to retrieve nonpartner from: " + this);
+    }
+    return this.partner;
+  }
+  
+  public boolean hasPartner() {
+    return (this.partner != null);
   }
   
   public long getTimestamp() {

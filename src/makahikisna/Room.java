@@ -79,13 +79,21 @@ public class Room implements Comparable<Room> {
     }
   }
   
+  public void drawSocialLines() {
+    for (Player player : players) {
+      player.updateSocialState(timeStep);
+    }
+  }
+  
   public void drawTwoPlayerRoom(Player player1, Player player2) {
     // Left side.
-    player1.updateState(timeStep);
+    player1.updateStrokeState(timeStep);
+    player1.updateFillState(timeStep);
     processing.arc(center_x, center_y, roomDiameter, roomDiameter, (float) Math.toRadians(90),
         (float) Math.toRadians(270));
     // Right side.
-    player2.updateState(timeStep);
+    player2.updateStrokeState(timeStep);
+    player2.updateFillState(timeStep);
     processing.arc(center_x, center_y, roomDiameter, roomDiameter, (float) Math.toRadians(0),
         (float) Math.toRadians(90));
     processing.arc(center_x,  center_y, roomDiameter, roomDiameter, (float) Math.toRadians(270),
@@ -97,24 +105,11 @@ public class Room implements Comparable<Room> {
   
   public void drawOnePlayerRoom(Player player) {
     // Left side.
-    player.updateState(timeStep);
+    player.updateStrokeState(timeStep);
+    player.updateFillState(timeStep);
     processing.arc(center_x, center_y, roomDiameter, roomDiameter, (float) Math.toRadians(90),
         (float) Math.toRadians(270));
     // Right side.
-    processing.arc(center_x, center_y, roomDiameter, roomDiameter, (float) Math.toRadians(0),
-        (float) Math.toRadians(90));
-    processing.arc(center_x,  center_y, roomDiameter, roomDiameter, (float) Math.toRadians(270),
-        (float) Math.toRadians(360));
-  }
-  
-  public void drawLeftSide(Player player) {
-    player.updateState(timeStep);
-    processing.arc(center_x, center_y, roomDiameter, roomDiameter, (float) Math.toRadians(90),
-        (float) Math.toRadians(270));
-  }
-  
-  public void drawRightSide(Player player) {
-    player.updateState(timeStep);
     processing.arc(center_x, center_y, roomDiameter, roomDiameter, (float) Math.toRadians(0),
         (float) Math.toRadians(90));
     processing.arc(center_x,  center_y, roomDiameter, roomDiameter, (float) Math.toRadians(270),
@@ -143,5 +138,25 @@ public class Room implements Comparable<Room> {
   @Override
   public String toString() {
     return this.getRoomID();
+  }
+
+  public int getPlayerX(Player player) {
+    //Only handle 1 or 2 players in a room right now.
+    if (this.players.size() == 1) {
+      return this.center_x;
+    }
+    else if (this.players.get(0).equals(player)) {
+      return this.center_x - (roomDiameter / 4);
+    } 
+    else if (this.players.get(1).equals(player)) {
+      return this.center_x + (roomDiameter / 4);
+    }
+    else {
+      throw new RuntimeException("Attempted x value for non-room player." + player + " " + this);
+    }
+  }
+
+  public int getPlayerY(Player player) {
+    return this.center_y;
   }
 }

@@ -25,9 +25,7 @@ public class Player {
   @SuppressWarnings("unused")
   private String firstName;
   private String email;
-  @SuppressWarnings("unused")
   private Team team;
-  @SuppressWarnings("unused")
   private Room room;
   
   private int numEvents = 0;
@@ -100,19 +98,35 @@ public class Player {
         events.get(timestep) : new ArrayList<Event>();
   }
   
+  public int getX() {
+    return this.room.getPlayerX(this);
+  }
+  
+  public int getY() {
+    return this.room.getPlayerY(this);
+  }
+  
   @Override
   public String toString() {
     return this.email;
   }
   
-  public void updateState(int timestep) {
+  public void updateStrokeState(int timestep) {
+    List<Event> events = getEvents(timestep);
+    strokeState.processTimestampData(events);
+    strokeState.setStrokeColor();
+  }
+  
+  public void updateFillState(int timestep) {
     List<Event> events = getEvents(timestep);
     fillState.processTimestampData(events);
     fillState.setFillColor();
+  }
+  
+  public void updateSocialState(int timestep) {
+    List<Event> events = getEvents(timestep);
     socialState.processTimestampData(events);
     socialState.drawLines();
-    strokeState.processTimestampData(events);
-    strokeState.setStrokeColor();
   }
   
   public int getNumEvents() {
@@ -132,5 +146,9 @@ public class Player {
             player.getPlayerID(), timesteps, events);
       }
     }
+  }
+  
+  public Team getTeam() {
+    return this.team;
   }
 }

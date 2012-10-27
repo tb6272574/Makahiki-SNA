@@ -1,7 +1,6 @@
 package makahikisna.state;
 
 import makahikisna.Color;
-import makahikisna.MakahikiSNA;
 import makahikisna.Player;
 import static makahikisna.MakahikiSNA.*;
 
@@ -27,6 +26,15 @@ public class ActiveInGameFillState extends FillState {
 
   @Override
   public void processTimestampData(List<Event> events) {
+    if (events.isEmpty()) {
+      currColor = color.white;
+    }
+    else {
+      currColor = color.green;
+    }
+  }
+
+  public void oldProcessTimestampData(List<Event> events) {
     int maxEvents = Player.maxPlayerTimeStepEvents;
     int newHue = (int) (((double)events.size()/(double)maxEvents) * 100);
     if (!events.isEmpty()) {
