@@ -21,7 +21,7 @@ public class MakahikiSNA extends PApplet {
   /** How many minutes of game time corresponds to one second of real time in the visualization. */
   public static int timeStepIntervalMinutes = 360;
   /** How many milliseconds of real time correspond to a single time step. */
-  public static int timeStepDurationMillis = 500;
+  public static int timeStepDurationMillis = 1000;
   
   /** Initialized in EventData.loadEventData() */
   public static TimeStepDefinition timeStepDefinition;
