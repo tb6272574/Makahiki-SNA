@@ -30,6 +30,9 @@ public class Team implements Comparable<Team> {
   int center_y = 0;
   private String teamID;
   SortedSet<Room> rooms = new TreeSet<Room>();
+  private Color color = new Color();
+  
+  private int currentEnergyGoals = 0;
 
   /**
    * Create a new Team with minimal information about it. 
@@ -81,8 +84,6 @@ public class Team implements Comparable<Team> {
     if ((center_x == 0) && (center_y == 0)) {
       throw new RuntimeException("Attempt to draw team without prior layout(): " + teamID);
     }
-    // Label the team
-    drawTeamLabel();
    
     // Draw basic room layout.
     for (Room room : this.rooms) {
@@ -94,11 +95,36 @@ public class Team implements Comparable<Team> {
     }
   }
   
-  private void drawTeamLabel() {
+  public void drawTeamLabel() {
     processing.textAlign(PConstants.CENTER, PConstants.CENTER);
-    processing.fill(MakahikiSNA.color.black);
+    // TODO Compute teamMaxPoints.
+    int teamMaxPoints = 8000; 
+    int points = this.getPoints(timeStep);
+    // Team label is black.
+    processing.fill(color.black);
     processing.text(teamID, center_x, center_y);
-    processing.text(this.getPoints(timeStep), center_x, center_y + 10);
+
+    // Team points are black if under 1000 points, otherwise gets a color. 
+    int hue = (int) (((double)(points - 1000)/(double)teamMaxPoints) * 250); // from red to blue.
+    processing.fill(Color.setHue((points < 1000) ? color.black : color.red, hue));
+    processing.text(this.getPoints(timeStep), center_x, center_y + 15);
+    
+    // Print Team Energy Goals
+    try {
+      currentEnergyGoals = EnergyGoalData.energyGoals.get(this).get(timeStep);
+    } catch (Exception e) {
+      // do nothing. Use prior value of currentEnergyGoals if we don't have one for this timestep. 
+    }
+    if (currentEnergyGoals == 0) {
+      processing.fill(color.black);
+    } 
+    else if (currentEnergyGoals < 5) {
+      processing.fill(color.red);
+    }
+    else if (currentEnergyGoals > 5) {
+      processing.fill(color.blue);
+    }
+    processing.text(String.valueOf(currentEnergyGoals), center_x, center_y - 15);
   }
 
 
@@ -111,6 +137,7 @@ public class Team implements Comparable<Team> {
     // [1] Read all of the CSV teams file into a list of string arrays called defs.
     List<String[]> defs; 
     try {
+      // TODO Read from subdirectory.
       File dir = new File(processor.dataPath(""));
       CSVReader csvFile = new CSVReader(new FileReader(new File(dir, "teams.csv")));
       defs = csvFile.readAll();

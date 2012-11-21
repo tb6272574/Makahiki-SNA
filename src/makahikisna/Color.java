@@ -1,7 +1,10 @@
 package makahikisna;
 
 import static makahikisna.MakahikiSNA.*;
-
+/**
+ * Simple convenience class to facilitate color manipulation.
+ * @author Philip Johnson
+ */
 public class Color {
   
   private int redHue = 0;
@@ -14,6 +17,7 @@ public class Color {
   public int black;
   public int green;
   public int red;
+  public int grey;
   
   public Color() {
     processing.colorMode(HSB, 360, 100, 100);
@@ -22,6 +26,7 @@ public class Color {
     this.red = processing.color(redHue, 100, 100);
     this.green = processing.color(greenHue, 100, 100);
     this.blue = processing.color(blueHue, 100, 100);
+    this.grey = this.red; //processing.color(100);
   }
   
   public static int brighten(int color, int level) {

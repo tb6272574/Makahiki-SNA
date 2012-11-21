@@ -7,16 +7,19 @@ import java.util.Date;
 import java.util.List;
 import au.com.bytecode.opencsv.CSVReader;
 
+/**
+ * Provides a method that reads the events.csv file in the data/ directory.
+ * It converts this data into Event objects, determines the timestamp associated 
+ * with each event, then updates each Player's instance with their associated event info.
+ * @param processor The processing instance.
+ */
 public class EventData {
   
-  /**
-   * Initialization function that reads the events.csv file in the data/ directory.
-   * It converts this data into Event objects, determines the timestamp associated 
-   * with each event, then updates each Player's instance with their associated event info.
-   * @param processor The processing instance.
-   */
+
   public static void loadEventData(MakahikiSNA processor) {
     // [1] Read all of the CSV event data into a list of string arrays called defs.
+    // TODO Read from subdirectory. 
+
     List<String[]> eventLines; 
     try { 
       File dir = new File(processor.dataPath(""));
@@ -37,6 +40,7 @@ public class EventData {
     long lastTimeStampMillis = 0;
     for (String[] eventLine : eventLines) {
       String timestamp = eventLine[0];
+      // TODO Eliminate hawaii.edu (fix input data)
       String user = eventLine[1] + "@hawaii.edu";
       //String lastName = event[2];
       //String group = event[3];

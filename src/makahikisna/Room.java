@@ -7,6 +7,10 @@ import java.util.TreeMap;
 
 import static makahikisna.MakahikiSNA.*;
 
+/**
+ * Represents a room and the players inside it.
+ * @author Philip Johnson
+ */
 public class Room implements Comparable<Room> {
   
   public static Map<String, Room> rooms = new TreeMap<String, Room>();

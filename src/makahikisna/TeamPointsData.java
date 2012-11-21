@@ -9,16 +9,20 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 import java.util.TreeMap;
 import au.com.bytecode.opencsv.CSVReader;
 
+/**
+ * Loads the data on how many points each user has at each timestep.
+ * @author Philip Johnson
+ */
 public class TeamPointsData {
   
   public static void loadData() {
     // [1] Read all of the CSV data into a list of string arrays.
     List<String[]> playerPointLines; 
     try { 
+      //TODO Read from subdirectory.
       File dir = new File(processing.dataPath(""));
       CSVReader csvFile = new CSVReader(new FileReader(new File(dir, "userPoints.csv")));
       playerPointLines = csvFile.readAll();

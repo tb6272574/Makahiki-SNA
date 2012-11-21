@@ -3,6 +3,10 @@ package makahikisna;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Implements an abstract data type representing an event.
+ * @author Philip Johnson
+ */
 public class Event implements Comparable<Event> {
   
   Date date;

@@ -10,18 +10,19 @@ import java.util.Map;
 import au.com.bytecode.opencsv.CSVReader;
 import static makahikisna.MakahikiSNA.*;
 
+/**
+ * Loads the messages.csv file in the data/ directory.
+ * It determines the timestamp associated with each message and stores it in the messages
+ * data structure for display during the visualization. 
+ * @param processor The processing instance.
+ */
 public class MessageData {
   
   private Map<Integer, String> messages = new HashMap<Integer, String>();
   
-  /**
-   * Initialization function that reads the messages.csv file in the data/ directory.
-   * It determines the timestamp associated with each message and stores it in the messages
-   * data structure for display during the visualization. 
-   * @param processor The processing instance.
-   */
   public MessageData() {
     // [1] Read all of the CSV message data into a list of string arrays.
+    // TODO Read from subdirectory.
     List<String[]> messageLines; 
     try { 
       File dir = new File(processing.dataPath(""));

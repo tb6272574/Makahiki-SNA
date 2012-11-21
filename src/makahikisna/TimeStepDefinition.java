@@ -3,6 +3,10 @@ package makahikisna;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * Provides a way to convert between time stamps in the data and time steps in the visualization.
+ * @author Philip Johnson
+ */
 public class TimeStepDefinition {
   /** How long each timestep is in milliseconds. */
   private long intervalMillis;

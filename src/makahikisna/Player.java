@@ -12,6 +12,10 @@ import makahikisna.state.CumulativeEventsStrokeState;
 import makahikisna.state.SocialState;
 import makahikisna.state.StrokeState;
 
+/**
+ * Represents a player and the events that they participate in.
+ * @author Philip Johnson
+ */
 public class Player implements Comparable<Player>{
   
   public static Map<String, Player> players = new HashMap<String, Player>();
