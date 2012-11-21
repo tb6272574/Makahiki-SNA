@@ -26,7 +26,7 @@ public class Color {
     this.red = processing.color(redHue, 100, 100);
     this.green = processing.color(greenHue, 100, 100);
     this.blue = processing.color(blueHue, 100, 100);
-    this.grey = this.red; //processing.color(100);
+    this.grey = processing.color(200);
   }
   
   public static int brighten(int color, int level) {
