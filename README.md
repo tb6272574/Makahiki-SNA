@@ -5,6 +5,15 @@ Social Network Analysis and Visualization of Makahiki games.
 
 Reads the following files with the following format from the data/ directory:
 
+teams.csv
+---------
+
+Format: lastname, firstname, email, building, room, floor, unused
+
+Example: Johnson,Philip,johnson@hawaii.edu,B,408,Hale Aloha Lehua
+
+Frequency: one definition per player.  
+
 energygoals.csv
 ---------------
 
@@ -47,3 +56,4 @@ Issues
 
 * energygoals refers to lounges, these are converted to floors in the code.
 * Yongwen's code outputs an extra first line which must be deleted.
+* teams.csv contains the email host (i.e. @hawaii.edu), but other files contain just "users" (account without the email host). 
