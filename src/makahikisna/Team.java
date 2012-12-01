@@ -98,7 +98,7 @@ public class Team implements Comparable<Team> {
   public void drawTeamLabel() {
     processing.textAlign(PConstants.CENTER, PConstants.CENTER);
     // TODO Compute teamMaxPoints.
-    int teamMaxPoints = 8000; 
+    int teamMaxPoints = 12000; 
     int points = this.getPoints(timeStep);
     // Team label is black.
     processing.fill(color.black);

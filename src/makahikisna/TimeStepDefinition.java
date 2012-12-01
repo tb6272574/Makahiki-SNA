@@ -42,7 +42,7 @@ public class TimeStepDefinition {
   
   public Date timeStep2TimeStamp(int timestep) {
     long timestamp = firstIntervalTimeMillis + 
-        (timestep * (MakahikiSNA.timeStepIntervalMinutes * 1000 * 60));
+        ((long)timestep * ((long)MakahikiSNA.timeStepIntervalMinutes * 1000 * 60));
     return new Date(timestamp);
   }
   
