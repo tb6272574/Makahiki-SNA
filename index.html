@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Makahiki-SNA by philipmjohnson</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">Makahiki-SNA</h1>
+        <p class="header">Social Network Analysis and Visualization of Makahiki games.</p>
+
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/philipmjohnson/Makahiki-SNA/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/philipmjohnson/Makahiki-SNA/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/philipmjohnson/Makahiki-SNA">View On GitHub</a></li>
+        </ul>
+
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/philipmjohnson">philipmjohnson</a></p>
+
+
+      </header>
+      <section>
+        <h1>Makahiki-SNA</h1>
+
+<p>Social Network Analysis and Visualization of Makahiki games.</p>
+
+<p>Reads the following files with the following format from the data/ directory:</p>
+
+<h2>teams.csv</h2>
+
+<p>Format: lastname, firstname, email, building, room, floor, unused</p>
+
+<p>Example: Johnson,Philip,<a href="mailto:johnson@hawaii.edu">johnson@hawaii.edu</a>,B,408,Hale Aloha Lehua</p>
+
+<p>Frequency: one definition per player.  </p>
+
+<h2>energygoals.csv</h2>
+
+<p>Format:  timestamp,loungeString, cumulative energy-goals so far</p>
+
+<p>Example: 2012-09-04 00:00:00,Lehua-B,0</p>
+
+<p>Frequency: Typically one line per day per lounge.</p>
+
+<h2>events.csv</h2>
+
+<p>Format: timestamp,user,last_name,group,room,action,action-url,partner,partner-group,partner-room</p>
+
+<p>Example: 2012-09-05 12:23:34.307291,foo,Foo,Lokelani,159,View,/log/notifications/alert/view-lock-open/</p>
+
+<p>Frequency: whenever a logged event occurs.</p>
+
+<h2>messages.csv</h2>
+
+<p>Format: timestamp, message</p>
+
+<p>Example: 2012-09-04 17:00:00,Kickoff Party</p>
+
+<p>Frequency:  whenever a real-world event occurs, typically several times per week.</p>
+
+<h2>userPoints.csv</h2>
+
+<p>Format: timestamp, user, cumulative points so far</p>
+
+<p>Example: 2012-09-04 00:00:00,foo,0</p>
+
+<p>Frequency: once per hour per user. </p>
+
+<h2>Issues</h2>
+
+<ul>
+<li>energygoals refers to lounges, these are converted to floors in the code.</li>
+<li>Yongwen's code outputs an extra first line which must be deleted.</li>
+<li>teams.csv contains the email host (i.e. @hawaii.edu), but other files contain just "users" (account without the email host). </li>
+</ul>
+      </section>
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		
+  </body>
+</html>
